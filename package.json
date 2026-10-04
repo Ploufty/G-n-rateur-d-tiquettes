@@ -1,0 +1,24 @@
+{
+  "name": "etiquettes-maternelle",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.13.0",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start": "node tools/server.js",
+    "vendor": "node tools/vendor.js",
+    "test:browser": "node tests/browser.js"
+  },
+  "dependencies": {
+    "@fontsource/fredoka": "5.3.0",
+    "@fontsource/nunito-sans": "5.3.0",
+    "@fontsource/playwrite-fr-trad": "5.3.0",
+    "jspdf": "4.2.1",
+    "jszip": "3.10.2"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0"
+  }
+}
