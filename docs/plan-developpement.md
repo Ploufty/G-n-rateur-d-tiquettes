@@ -28,4 +28,6 @@ Toute évolution du JSON doit préserver les projets existants ou fournir une mi
 
 ## Priorités après les premiers retours
 
+La prochaine séance doit commencer par le rappel des demandes de simplification dans [prochaine-seance.md](prochaine-seance.md) : parcours, aperçus de polices, CSV, marges et mesures, modèles visuels, menu du format libre, bandeau JSON près du plein écran, palette de couleurs et aperçu accessible pendant la création.
+
 Le fichier CSV de référence, les essais papier et l’ajustement des dimensions sont prioritaires. Le PDF vectoriel et les essais Firefox/tablette suivent. Les nouveaux formats papier et l’onglet texte exigent une validation fonctionnelle avant ajout.
