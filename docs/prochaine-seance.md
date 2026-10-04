@@ -12,5 +12,6 @@ Demandes d’Etienne du 5 octobre 2026. À rappeler au début de la prochaine s�
 8. **Proposer des couleurs courantes** : ajouter une palette de choix rapides en conservant le sélecteur de couleur personnalisé apprécié par Etienne.
 9. **Garder l’aperçu facile d’accès pendant la création** : s’assurer qu’il fonctionne et se met à jour, et qu’on peut bien visualiser l’étiquette au moment de modifier ses réglages. La présentation doit accompagner le parcours simplifié, sans imposer une disposition avant discussion.
 10. **Afficher les icônes dans les choix** : montrer les pictogrammes eux-mêmes pour les reconnaître facilement, dans les réglages des étiquettes comme des groupes. Conserver un libellé lisible et accessible en complément du dessin.
+11. **Choisir un nom moins centré sur la maternelle** : élargir le nom visible du projet pour convenir à différents niveaux et usages. Proposition de départ : « Générateur d’étiquettes ». Harmoniser ensuite le titre de l’interface, le titre du navigateur et la documentation ; le nouveau nom ne change pas à lui seul le périmètre des fonctions.
 
 Le rappel demandé concerne la reprise du travail sur le projet ; aucune date de notification automatique n’a été fixée.
