@@ -38,8 +38,8 @@
     const doc=pdfDocument({w:210,h:297});const canvas=document.createElement('canvas');canvas.width=1240;canvas.height=1754;const ctx=canvas.getContext('2d');await R.ready(project);
     const sections=[...project.groups,{id:null,name:'Sans groupe',color:'#555566'}];let y=70,page=0;
     const flush=()=>{if(page++)doc.addPage();doc.addImage(canvas.toDataURL('image/png'),'PNG',0,0,210,297);ctx.fillStyle='#fff';ctx.fillRect(0,0,1240,1754);y=70;};
-    ctx.fillStyle='#fff';ctx.fillRect(0,0,1240,1754);ctx.fillStyle='#000091';ctx.font='700 32px "Nunito Sans"';ctx.fillText(project.name+' · Groupes',70,y);y+=65;
-    for(const g of sections){const students=project.students.filter(s=>s.groupId===g.id);if(!students.length)continue;if(y>1550)flush();ctx.fillStyle=g.color;ctx.font='700 27px "Nunito Sans"';ctx.fillText(`${g.name} (${students.length})`,70,y);y+=45;ctx.font='24px "Nunito Sans"';ctx.fillStyle='#202936';for(const s of students){if(y>1640)flush();ctx.fillText(s.name,90,y);y+=38;}y+=28;}
+    ctx.fillStyle='#fff';ctx.fillRect(0,0,1240,1754);ctx.fillStyle='#000091';ctx.font='700 32px Arial';ctx.fillText(project.name+' · Groupes',70,y);y+=65;
+    for(const g of sections){const students=project.students.filter(s=>s.groupId===g.id);if(!students.length)continue;if(y>1550)flush();ctx.fillStyle=g.color;ctx.font='700 27px Arial';ctx.fillText(`${g.name} (${students.length})`,70,y);y+=45;ctx.font='24px Arial';ctx.fillStyle='#202936';for(const s of students){if(y>1640)flush();ctx.fillText(s.name,90,y);y+=38;}y+=28;}
     flush();download(doc.output('blob'),`${safeName(project.name)}-groupes.pdf`);
   }
   globalThis.LabelExports={download,pdf,exportPNG,calibration,groupsPDF,safeName};

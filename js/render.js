@@ -8,7 +8,7 @@
   }
   async function ready(project) {
     const active=new Set(project.resources.map(r=>r.data));for(const data of cache.keys())if(!active.has(data))cache.delete(data);
-    await Promise.all(C.FONTS.map(font=>document.fonts.load(`28px "${font}"`)));
+    await Promise.all(C.FONTS.flatMap(font=>[400,700].map(weight=>document.fonts.load(`${weight} 28px "${font}"`))));
     await document.fonts.ready;
     return new Map(await Promise.all(project.resources.map(async r=>[r.id,await image(r.data)])));
   }
@@ -38,17 +38,19 @@
     let size=line.size*PT;
     const highlighted=line.initialSize!==1||line.initialBold||line.initialColor!==line.color;
     const font=(px,bold)=>`${bold?'700':'400'} ${px}px "${line.font}"`;
+    ctx.textBaseline='alphabetic';
     const measure=()=>{
-      if(!highlighted){ctx.font=font(size,line.bold);return ctx.measureText(text).width;}
-      ctx.font=font(size*line.initialSize,line.bold||line.initialBold);const a=ctx.measureText(first).width;
-      ctx.font=font(size,line.bold);return a+ctx.measureText(rest).width;
+      ctx.font=font(size,line.bold);const b=ctx.measureText(highlighted?rest:text);
+      if(!highlighted)return {width:b.width,ascent:b.actualBoundingBoxAscent,descent:b.actualBoundingBoxDescent};
+      ctx.font=font(size*line.initialSize,line.bold||line.initialBold);const a=ctx.measureText(first);
+      return {width:a.width+b.width,ascent:Math.max(a.actualBoundingBoxAscent,b.actualBoundingBoxAscent),descent:Math.max(a.actualBoundingBoxDescent,b.actualBoundingBoxDescent)};
     };
-    const width=measure();size*=Math.min(1,w/Math.max(width,1),maxHeight/(size*line.initialSize*1.65));
-    ctx.textBaseline='middle';
-    if(!highlighted){ctx.font=font(size,line.bold);ctx.fillStyle=line.color;ctx.textAlign='center';ctx.fillText(text,x+w/2,y);}
+    const original=measure();size*=Math.min(1,w/Math.max(original.width,1),maxHeight*.82/Math.max(original.ascent+original.descent,1));
+    const metrics=measure(),baseline=y+(metrics.ascent-metrics.descent)/2;
+    if(!highlighted){ctx.font=font(size,line.bold);ctx.fillStyle=line.color;ctx.textAlign='center';ctx.fillText(text,x+w/2,baseline);}
     else {
-      const fitted=measure(),start=x+(w-fitted)/2;ctx.textAlign='left';ctx.font=font(size*line.initialSize,line.bold||line.initialBold);ctx.fillStyle=line.initialColor;ctx.fillText(first,start,y);
-      const offset=ctx.measureText(first).width;ctx.font=font(size,line.bold);ctx.fillStyle=line.color;ctx.fillText(rest,start+offset,y);
+      const start=x+(w-metrics.width)/2;ctx.textAlign='left';ctx.font=font(size*line.initialSize,line.bold||line.initialBold);ctx.fillStyle=line.initialColor;ctx.fillText(first,start,baseline);
+      const offset=ctx.measureText(first).width;ctx.font=font(size,line.bold);ctx.fillStyle=line.color;ctx.fillText(rest,start+offset,baseline);
     }
   }
   function drawLabel(ctx,project,student,x,y,w,h,images) {
@@ -69,7 +71,7 @@
     const lines=style.lines.filter(line=>line.enabled),extras=(style.initial.enabled?1:0)+(style.icon?1:0),slots=lines.length+extras;
     const sh=th/Math.max(slots,1);let cy=ty+sh/2;
     if(style.icon){icon(ctx,style.icon,tx+tw/2,cy,Math.min(sh*.65,8*MM),style.iconColor);cy+=sh;}
-    if(style.initial.enabled){drawLine(ctx,Array.from(student.name)[0]||'',{...style.lines[0],font:'Nunito Sans',size:style.initial.size,casing:'upper',color:style.initial.color,initialColor:style.initial.color,initialSize:1,initialBold:false,bold:true},tx,cy,tw,sh);cy+=sh;}
+    if(style.initial.enabled){drawLine(ctx,Array.from(student.name)[0]||'',{...style.lines[0],font:'Marelle Bâton',size:style.initial.size,casing:'upper',color:style.initial.color,initialColor:style.initial.color,initialSize:1,initialBold:false,bold:true},tx,cy,tw,sh);cy+=sh;}
     lines.forEach(line=>{drawLine(ctx,student.name,line,tx,cy,tw,sh);cy+=sh;});
     ctx.restore();
     if(style.border.enabled){ctx.save();ctx.strokeStyle=style.border.color;ctx.lineWidth=style.border.width*MM;ctx.setLineDash(style.border.dashed?[2*MM,MM]:[]);const inset=ctx.lineWidth/2;rounded(ctx,x+inset,y+inset,w-2*inset,h-2*inset,Math.max(0,style.border.radius*MM-inset));ctx.stroke();ctx.restore();}

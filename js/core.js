@@ -4,11 +4,11 @@
   const clone = value => JSON.parse(JSON.stringify(value));
   const id = () => globalThis.crypto.randomUUID();
   const normal = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
-  const FONTS = ['Nunito Sans', 'Playwrite FR Trad', 'Fredoka', 'Arial', 'Georgia'];
+  const FONTS = ['Nunito Sans', 'Marelle Bâton', 'Marelle', 'OpenDyslexic', 'Fredoka', 'Playwrite FR Trad'];
   const ICONS = ['', 'circle', 'star', 'heart', 'sun', 'flower', 'triangle'];
   function defaultStyle() {
     return {
-      lines: ['upper', 'title', 'title'].map((casing, i) => ({ enabled: i === 0, font: i === 2 ? FONTS[1] : FONTS[0], size: i === 2 ? 20 : 28, casing, color: '#202936', bold: i === 0, initialSize: 1, initialBold: false, initialColor: '#202936' })),
+      lines: ['upper', 'original', 'original'].map((casing, i) => ({ enabled: i === 0, font: i === 2 ? FONTS[1] : FONTS[0], size: i === 2 ? 20 : 28, casing, color: '#202936', bold: i === 0, initialSize: 1, initialBold: false, initialColor: '#202936' })),
       initial: { enabled: false, size: 36, color: '#000091' },
       photo: { position: 'left', shape: 'rounded', size: 28 },
       background: { color: '#ffffff', groupColor: false, assetId: null, zoom: 1, x: 0, y: 0, opacity: 0.35 },
